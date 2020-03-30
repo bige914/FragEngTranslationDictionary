@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="array_spinner">
+        <item> </item>
+        <item>fr</item>
+        <item>es</item>
+        <item>de</item>
+        <item>it</item>
+    </array>
+
+</resources>
