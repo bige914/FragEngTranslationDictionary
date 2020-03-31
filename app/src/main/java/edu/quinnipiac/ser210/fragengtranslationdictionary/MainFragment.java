@@ -243,7 +243,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
 
             if(result != null){
                 Bundle bundle = new Bundle();
-                Log.d("MainActivity",result);
+                Log.d("MainFragment",result);
                 //Intent intent = new Intent(MainActivity.this,ResultActivity.class);
                // intent.putExtra("translation",result);
                 //startActivity(intent);

@@ -32,6 +32,7 @@
 
     <Spinner
         android:id="@+id/spinner"
+        android:entries="@array/array_spinner"
         android:layout_width="146dp"
         android:layout_height="21dp"
         android:layout_marginTop="16dp"
