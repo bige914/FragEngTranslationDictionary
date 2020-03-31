@@ -13,6 +13,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,12 +35,12 @@ import java.net.URL;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MainFragment extends Fragment implements View.OnClickListener{
+public class MainFragment extends Fragment{
     private NavController navController = null;
     private TargetLangHandler tLangHandler = new TargetLangHandler();
     private ShareActionProvider provider;
     private boolean userSelect = false;
-    private boolean wordToTran = false;
+    //private boolean wordToTran = false;
     private String[] itemStr = new String[2];
 
     private String url1 = "https://systran-systran-platform-for-language-processing-v1";
@@ -60,6 +61,8 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+
     }
 
     @Override
@@ -68,6 +71,8 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         spinner = (Spinner) rootView.findViewById(R.id.spinner);
+
+
 
         ArrayAdapter<CharSequence> langAdapter = ArrayAdapter.createFromResource(rootView.getContext(),
                 R.array.array_spinner, android.R.layout.simple_spinner_item);
@@ -80,18 +85,27 @@ public class MainFragment extends Fragment implements View.OnClickListener{
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                word = (EditText) getView().findViewById(R.id.editText);
+                inpt=word.getText().toString();
+                if(!inpt.equals("")){
+                    userSelect = true;
+                }
                 if (userSelect) {
+
+                    Log.d("input =", inpt);
+                    itemStr[1]=inpt;
+
                     final String item = (String) parent.getItemAtPosition(position);
                     Log.i("onItemSelected :trgtLng", item);
                     System.out.println("onWordSelect :word " + itemStr[1]);
-                    //Log.i("onWordSelect :word", itemStr[1]);
+                    Log.i("onWordSelect :word", itemStr[1]);
                     itemStr[0]=item;
 
                     //TODO : call of async subclass goes here
                     new FetchTranslation().execute(itemStr);//possible cause of issue? had 'item' in it prior
 
                     userSelect = false;
-                    wordToTran = false;
+                    //wordToTran = false;
                 }
             }
 
@@ -108,21 +122,13 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         navController = Navigation.findNavController(view);
         //view.findViewById(R.id.spinner).setOnClickListener(this);
     }
 
 
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.spinner){
-            word = (EditText) getView().findViewById(R.id.editText);
-            inpt=word.getText().toString();
-            Log.d("input =", inpt);
-            itemStr[1]=inpt;
 
-        }
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -134,6 +140,12 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         if (provider == null)
             Log.d("MainFragment", "noshare provider");
     }
+/*
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        userSelect = true;
+    }*/
 
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
