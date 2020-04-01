@@ -24,12 +24,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Objects;
 
 
 /**
@@ -70,27 +72,29 @@ public class MainFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        spinner = (Spinner) rootView.findViewById(R.id.spinner);
 
+        return inflater.inflate(R.layout.fragment_main, container, false);
+    }
 
-
-        ArrayAdapter<CharSequence> langAdapter = ArrayAdapter.createFromResource(rootView.getContext(),
-                R.array.array_spinner, android.R.layout.simple_spinner_item);
-
-        langAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(langAdapter);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        spinner = (Spinner) view.findViewById(R.id.spinner);
 
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                word = (EditText) getView().findViewById(R.id.editText);
+                Log.d("onItemSelected", position+"");
+                word = (EditText) Objects.requireNonNull(getView()).findViewById(R.id.editText);
                 inpt=word.getText().toString();
                 if(!inpt.equals("")){
                     userSelect = true;
                 }
                 if (userSelect) {
+
+                   //
 
                     Log.d("input =", inpt);
                     itemStr[1]=inpt;
@@ -100,6 +104,8 @@ public class MainFragment extends Fragment{
                     System.out.println("onWordSelect :word " + itemStr[1]);
                     Log.i("onWordSelect :word", itemStr[1]);
                     itemStr[0]=item;
+
+
 
                     //TODO : call of async subclass goes here
                     new FetchTranslation().execute(itemStr);//possible cause of issue? had 'item' in it prior
@@ -115,18 +121,20 @@ public class MainFragment extends Fragment{
             }
         });
 
-        return inflater.inflate(R.layout.fragment_main, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
 
         navController = Navigation.findNavController(view);
         //view.findViewById(R.id.spinner).setOnClickListener(this);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onDetach(){
+        super.onDetach();
+    }
 
 
 
@@ -140,12 +148,6 @@ public class MainFragment extends Fragment{
         if (provider == null)
             Log.d("MainFragment", "noshare provider");
     }
-/*
-    @Override
-    public void onUserInteraction() {
-        super.onUserInteraction();
-        userSelect = true;
-    }*/
 
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -170,8 +172,6 @@ public class MainFragment extends Fragment{
         }
 
         if(id == R.id.action_help){
-            //Intent intent = new Intent(MainActivity.this, Help.class);
-            //startActivity(intent);
             navController.navigate(R.id.action_mainFragment_to_helpFragment);
             return true;
         }
@@ -218,6 +218,7 @@ public class MainFragment extends Fragment{
                 }
                 translation = getStringFromBuffer(
                         new BufferedReader(new InputStreamReader(urlConnection.getInputStream())));
+                assert translation != null;
                 Log.d("translation", translation);
             }catch (Exception e){
                 Log.e("MainActivity","Error" + e.getMessage());
@@ -255,15 +256,19 @@ public class MainFragment extends Fragment{
 
             if(result != null){
                 Bundle bundle = new Bundle();
-                Log.d("MainFragment",result);
-                //Intent intent = new Intent(MainActivity.this,ResultActivity.class);
-               // intent.putExtra("translation",result);
-                //startActivity(intent);
+                Log.d("onPostExecute",result);
+
                 bundle.putString("translation", result);
+
+                //reset edit text field
+                word.getText().clear();
+                //reset spinner to default
+                spinner.setSelection(0);
+
                 navController.navigate(R.id.action_mainFragment_to_resultFragment, bundle);
-            }
 
-
+            }else
+                Log.d("onPostExecute","null");
 
 
         }

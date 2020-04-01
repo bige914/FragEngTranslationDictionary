@@ -13,11 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ResultFragment extends Fragment {
+public class ResultFragment extends Fragment implements View.OnClickListener{
     private String translation;
 
     public ResultFragment() {
@@ -61,6 +63,27 @@ public class ResultFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        assert getArguments() != null;
         translation = getArguments().getString("translation");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onDetach(){
+        super.onDetach();
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        //getActivity().onBackPressed();
+        //onDetach();
+        //getActivity().getViewModelStore().clear();
+        //onDestroy();
+
     }
 }

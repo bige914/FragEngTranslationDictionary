@@ -20,18 +20,10 @@
         android:id="@+id/resultFragment"
         android:name="edu.quinnipiac.ser210.fragengtranslationdictionary.ResultFragment"
         android:label="fragment_result"
-        tools:layout="@layout/fragment_result" >
-        <action
-            android:id="@+id/action_resultFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_result" />
     <fragment
         android:id="@+id/helpFragment"
         android:name="edu.quinnipiac.ser210.fragengtranslationdictionary.HelpFragment"
         android:label="fragment_help"
-        tools:layout="@layout/fragment_help" >
-        <action
-            android:id="@+id/action_helpFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_help" />
 </navigation>
