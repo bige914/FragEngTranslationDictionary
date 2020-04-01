@@ -1,9 +1,14 @@
 package edu.quinnipiac.ser210.fragengtranslationdictionary;
-
+/**
+ * MainFragment fragment, accepts inputs from TextEdit and Spinner
+ * to perform a function related to translation to other languages from English
+ *
+ * @authors Ellsworth Evarts IV, Ania Lightly
+ * @date 4/01/2020
+ */
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.ShareActionProvider;
@@ -11,9 +16,7 @@ import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,11 +24,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -42,14 +43,12 @@ public class MainFragment extends Fragment{
     private TargetLangHandler tLangHandler = new TargetLangHandler();
     private ShareActionProvider provider;
     private boolean userSelect = false;
-    //private boolean wordToTran = false;
     private String[] itemStr = new String[2];
 
     private String url1 = "https://systran-systran-platform-for-language-processing-v1";
     private String url2 = ".p.rapidapi.com/translation/text/translate?";
     private String source = "source=en&";
     private String baseUrl = url1 + url2 + source;
-
     private String inpt = "";
 
     private EditText word;
@@ -63,8 +62,6 @@ public class MainFragment extends Fragment{
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
-
     }
 
     @Override
@@ -81,20 +78,19 @@ public class MainFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         spinner = (Spinner) view.findViewById(R.id.spinner);
 
-
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("onItemSelected", position+"");
+
                 word = (EditText) Objects.requireNonNull(getView()).findViewById(R.id.editText);
                 inpt=word.getText().toString();
+
                 if(!inpt.equals("")){
                     userSelect = true;
                 }
                 if (userSelect) {
-
-                   //
 
                     Log.d("input =", inpt);
                     itemStr[1]=inpt;
@@ -105,38 +101,19 @@ public class MainFragment extends Fragment{
                     Log.i("onWordSelect :word", itemStr[1]);
                     itemStr[0]=item;
 
-
-
                     //TODO : call of async subclass goes here
                     new FetchTranslation().execute(itemStr);//possible cause of issue? had 'item' in it prior
 
                     userSelect = false;
-                    //wordToTran = false;
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
-
-
         navController = Navigation.findNavController(view);
-        //view.findViewById(R.id.spinner).setOnClickListener(this);
     }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onDetach(){
-        super.onDetach();
-    }
-
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -265,18 +242,12 @@ public class MainFragment extends Fragment{
                 //reset spinner to default
                 spinner.setSelection(0);
 
+                //pass along display data of translated word to resultFragment and move to said Fragment
                 navController.navigate(R.id.action_mainFragment_to_resultFragment, bundle);
 
             }else
                 Log.d("onPostExecute","null");
-
-
         }
-
-
-
-
-
     }
 
 }

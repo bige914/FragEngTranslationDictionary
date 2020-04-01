@@ -1,18 +1,18 @@
 package edu.quinnipiac.ser210.fragengtranslationdictionary;
-
-import androidx.annotation.NonNull;
+/**
+ * MainActivity class, acts as a place for fragments to be exchanged within, provides a toolbar
+ * to all fragments.
+ *
+ * @authors Ellsworth Evarts IV, Ania Lightly
+ * @date 4/01/2020
+ */
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
-
 import android.os.Bundle;
-import android.view.MenuItem;
 
-import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
     //DrawerLayout drawerLayout;
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar= findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -34,12 +34,4 @@ public class MainActivity extends AppCompatActivity {
         //NavigationUI.setupWithNavController(navigationView, navController);
         //navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
     }
-/*
-    @Override
-    public void onBackPressed() {
-            //super.onBackPressed();
-    }*/
-
-
-
 }

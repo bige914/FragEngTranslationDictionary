@@ -1,10 +1,13 @@
 package edu.quinnipiac.ser210.fragengtranslationdictionary;
-
+/**
+ * HelpFragment fragment, offers instructions for how to use the app
+ *
+ * @authors Ellsworth Evarts IV, Ania Lightly
+ * @date 4/01/2020
+ */
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,14 +17,13 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HelpFragment extends Fragment implements View.OnClickListener{
+public class HelpFragment extends Fragment {
 
     private NavController navController = null;
 
     public HelpFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,13 +39,5 @@ public class HelpFragment extends Fragment implements View.OnClickListener{
             return true;
         }
         else  return false;
-    }
-
-
-
-
-    @Override
-    public void onClick(View view) {
-        getActivity().onBackPressed();
     }
 }

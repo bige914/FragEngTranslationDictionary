@@ -1,5 +1,11 @@
 package edu.quinnipiac.ser210.fragengtranslationdictionary;
-
+/**
+ * TargetLangHandler class, handles the processing and separating of JSON
+ * data from Rest API
+ *
+ * @authors Ellsworth Evarts IV, Ania Lightly
+ * @date 4/01/2020
+ */
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -7,19 +13,14 @@ import org.json.JSONObject;
 public class TargetLangHandler {
     private static final int TARGET_L_ARRAY_LENGTH= 5;
     final public String[] language_codes = new String[TARGET_L_ARRAY_LENGTH];
-   // private int code_pos;
-    /*
-    public int getCodePos(){
-        return code_pos;
-    }
-    */
+
 
     public TargetLangHandler(){
 
         int i = 0;
         for(int codeVal = 0; codeVal < TARGET_L_ARRAY_LENGTH; codeVal++){
             language_codes[i] = swCaseHelper(i);
-            //code_pos=i;
+
             i++;
         }
     }
